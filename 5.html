@@ -1,0 +1,120 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+body {
+    font-family: 'Arial', sans-serif;
+}
+.container {
+    margin-top: 20px;
+    
+}
+#searchInput {
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+}
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    
+}
+.table thead {
+    background-color: #149677;
+}
+.table th,
+.table td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+.table th {
+    font-weight: bold;
+    color:white;
+}
+.table td img.img-thumbnail {
+    width: 50px;
+    height: auto;
+}
+.table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.table tr:hover {
+    background-color: #eaeaea;
+}    
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>Справочник персоналий</h2>
+    <input type="text" id="searchInput" onkeyup="filterList()" placeholder="Поиск по имени...">
+    <table class="table" id="personsTable">
+        <thead>
+        <tr>
+            <th>Фото</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Профессия</th>
+            <th>Год</th>
+        </tr>
+        </thead>
+        <tbody id="personsList">
+        </tbody>
+    </table>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    loadPersons();
+});
+
+function loadPersons() {
+    const persons = [
+        { img: 'https://this-person-does-not-exist.com/img/avatar-gen116c5bf032355d240f2bee3089c2df35.jpg', lastName: 'Иванов', firstName: 'Иван', profession: 'Программист', year: 1980 },
+        { img: 'https://this-person-does-not-exist.com/img/avatar-gen9ef6452521e470eab7d2e26cda518f8c.jpg', lastName: 'Волкова', firstName: 'Юля', profession: 'Менеджер', year: 1997 },
+        { img: 'https://this-person-does-not-exist.com/img/avatar-gen11bb2f709c9988a8160323ae77ef9482.jpg', lastName: 'Белов', firstName: 'Владислав', profession: 'Руководитель', year: 1990 },
+        { img: 'https://this-person-does-not-exist.com/img/avatar-gen62625628ccd1c92e1fd49db3f9ecca40.jpg', lastName: 'Хелнова', firstName: 'Джен', profession: 'Программист', year: 1971 },
+        { img: 'https://this-person-does-not-exist.com/img/avatar-gen2eda582edaab0cb0c3d499ab37dbbef2.jpg', lastName: 'Индив', firstName: 'Джулия', profession: 'Зам.Руководителя', year: 1989 },
+        { img: 'https://this-person-does-not-exist.com/img/avatar-gen75c97caf2f576c3d5cfd80f1a05b670a.jpg', lastName: 'Мейсон', firstName: 'Глория', profession: 'Бугалтер', year: 1980 },
+        { img: 'https://this-person-does-not-exist.com/img/avatar-gencd01c392eb221f7142fb081d937462fd.jpg', lastName: 'Хьинов', firstName: 'Сейджун', profession: 'Юрист', year: 1999 },
+        { img: 'https://this-person-does-not-exist.com/img/avatar-gen2cccf516baac005dda463a063678f45b.jpg', lastName: 'Уайт', firstName: 'Амелиа', profession: 'Главный-Менеджер', year: 1995 },
+    ];
+
+    const tableBody = document.getElementById('personsList');
+    persons.forEach(person => {
+        const row = `<tr>
+                        <td><img src="${person.img}" class="img-thumbnail" alt="Фото"></td>
+                        <td>${person.lastName}</td>
+                        <td>${person.firstName}</td>
+                        <td>${person.profession}</td>
+                        <td>${person.year}</td>
+                     </tr>`;
+        tableBody.innerHTML += row;
+    });
+}
+
+function filterList() {
+    let input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById('searchInput');
+    filter = input.value.toUpperCase();
+    table = document.getElementById('personsTable');
+    tr = table.getElementsByTagName('tr');
+
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName('td')[1]; 
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = '';
+            } else {
+                tr[i].style.display = 'none';
+            }
+        }
+    }
+}
+</script>
+</body>
+</html>
